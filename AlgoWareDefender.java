@@ -41,38 +41,54 @@ The iteration from starting point i to N, has a running time of O(N). The other 
 in my code comprise of locating substrings within my main String "string" and converting those into integers.
 This all happens in O(1) time, and repeats for each time through. The other function is simply updating
 my dp array for each of these substring checks. So overall, O(n) is the time complexity of my code.
+-------------------
+Note: The notes in my code were placeholders from Josh B's ppt. Sorry for the confusion, but it helped me
+keep my thoughts together and map it out.
 */
 public class AlgoWareDefender {
-    public static int findNumDecodings(String string) {
-    	/*Check for empty or null input*/
-    	if (string == null || string.isEmpty()) {
-    		return 1;
-    	}
-    	int n =string.length();
-    /*An array (n + 1) is needed to store the intermediate results up to 
-    	each index so we don’thave to recompute them.*/
-    	int[] dp = new int[n+1];
-    	dp[0] = 1;
-    	dp[1] = 1;
-    
-    	for (int i = 2; i<=n; i++) {
-    		/*For each character, check if the character itself can form a valid letter, and if so, do
-something with dp[i-1] and dp[i].*/
-    		if (string.charAt(i-1) != '0') {
-    			/*If the single digit is valid (not zero), add the number of ways to decode the string up to the previous
-character.*/
-    			dp[i] += dp[i-1];
-    		}
-    		/*Also, check if the two-character combination with the previous character can form a valid
-    		letter (i.e., is between 10 and 26), and if so, do something with dp[i-2] and dp[i].*/
-    		if (i >= 2 && Integer.parseInt(string.substring(i - 2, i)) >=10 && Integer.parseInt(string.substring(i - 2, i)) <= 26) {
-    			/*If the two digits form a valid number between 10 and 26, add the number of ways to decode the string
-up to two characters back. Repeat the two bullets above until you reach the end of the string.*/
-    			dp[i] += dp[i - 2];
-    		}
-    	}
-        return dp[n];
-    }
+	public static int findNumDecodings(String string) {
+		/* Check for empty or null input */
+		if (string == null || string.isEmpty()) {
+			return 1;
+		}
+		int n = string.length();
+		/*
+		 * An array (n + 1) is needed to store the intermediate results up to each index
+		 * so we don’thave to recompute them.
+		 */
+		int[] dp = new int[n + 1];
+		dp[0] = 1;
+		dp[1] = 1;
+
+		for (int i = 2; i <= n; i++) {
+			/*
+			 * For each character, check if the character itself can form a valid letter,
+			 * and if so, do something with dp[i-1] and dp[i].
+			 */
+			if (string.charAt(i - 1) != '0') {
+				/*
+				 * If the single digit is valid (not zero), add the number of ways to decode the
+				 * string up to the previous character.
+				 */
+				dp[i] += dp[i - 1];
+			}
+			/*
+			 * Also, check if the two-character combination with the previous character can
+			 * form a valid letter (i.e., is between 10 and 26), and if so, do something
+			 * with dp[i-2] and dp[i].
+			 */
+			if (i >= 2 && Integer.parseInt(string.substring(i - 2, i)) >= 10
+					&& Integer.parseInt(string.substring(i - 2, i)) <= 26) {
+				/*
+				 * If the two digits form a valid number between 10 and 26, add the number of
+				 * ways to decode the string up to two characters back. Repeat the two bullets
+				 * above until you reach the end of the string.
+				 */
+				dp[i] += dp[i - 2];
+			}
+		}
+		return dp[n];
+	}
 
     /*
     DO NOT EDIT BELOW THIS
